@@ -2,20 +2,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _moveSpeed = 3f;
 
-    private Vector3 _direction;
-
-    public void Initialize(Vector3 direction)
-    {
-        _direction = direction;
-
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = rotation;
-    }
+    private EnemyTarget _target;
 
     private void Update()
     {
-        transform.Translate(_direction * _moveSpeed * Time.deltaTime, Space.World);
+        MoveToTarget();
+    }
+
+    public void SetTarget(EnemyTarget target)
+    {
+        _target = target;
+    }
+
+    private void MoveToTarget()
+    {
+        if (_target == null)
+            return;
+
+        transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, _moveSpeed * Time.deltaTime);
+
+        transform.rotation = Quaternion.LookRotation(_target.transform.position);
     }
 }

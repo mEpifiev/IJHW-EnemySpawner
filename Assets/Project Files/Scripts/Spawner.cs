@@ -1,16 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    private readonly Vector3[] Directions = new Vector3[] {
-        Vector3.right,
-        Vector3.left,
-        Vector3.forward
-    };
-
-    [SerializeField] private SpawnPoint[] _points;
-    [SerializeField] private Enemy _enemyPrefab;
+    [SerializeField] private List<SpawnPoint> _spawnPoints;
     [SerializeField] private float _delay;
     [SerializeField] private int _maxCount;
 
@@ -35,20 +29,11 @@ public class Spawner : MonoBehaviour
 
     private void SpawnEnemyToRandomPoint()
     {
-        if (_enemyPrefab == null || _points == null || _points.Length == 0)
+        if (_spawnPoints == null || _spawnPoints.Count == 0)
             return;
 
-        int randomIndex = Random.Range(0, _points.Length);
+        int randomIndex = Random.Range(0, _spawnPoints.Count);
 
-        Enemy enemy = Instantiate(_enemyPrefab, _points[randomIndex].transform.position, Quaternion.identity);
-
-        enemy.Initialize(GetRandomDirection());
-    }
-
-    private Vector3 GetRandomDirection()
-    {
-        int randomIndex = Random.Range(0, Directions.Length);
-
-        return Directions[randomIndex];
+        _spawnPoints[randomIndex].CreateEnemy();
     }
 }

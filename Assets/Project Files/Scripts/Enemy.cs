@@ -9,10 +9,14 @@ public class Enemy : MonoBehaviour
     public void Initialize(Vector3 direction)
     {
         _direction = direction;
+
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = rotation;
     }
 
     private void Update()
     {
-        transform.Translate(_direction * _moveSpeed * Time.deltaTime);
+        transform.Translate(_direction * _moveSpeed * Time.deltaTime, Space.World);
+        
     }
 }

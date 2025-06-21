@@ -14,8 +14,6 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float _delay;
     [SerializeField] private int _maxCount;
 
-    private int _currentCount;
-
     private WaitForSeconds _wait;
 
     private void Start()
@@ -27,7 +25,7 @@ public class Spawner : MonoBehaviour
     {
         _wait = new WaitForSeconds(_delay);
 
-        while(_currentCount < _maxCount)
+        for (int i = 0; i < _maxCount; i++)
         {
             SpawnEnemyToRandomPoint();
 
@@ -45,8 +43,6 @@ public class Spawner : MonoBehaviour
         Enemy enemy = Instantiate(_enemyPrefab, _points[randomIndex].transform.position, Quaternion.identity);
 
         enemy.Initialize(GetRandomDirection());
-
-        _currentCount++;
     }
 
     private Vector3 GetRandomDirection()

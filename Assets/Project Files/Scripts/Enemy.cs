@@ -17,6 +17,5 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         transform.Translate(_direction * _moveSpeed * Time.deltaTime, Space.World);
-        
     }
 }
